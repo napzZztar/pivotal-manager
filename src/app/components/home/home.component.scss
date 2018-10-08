@@ -10,12 +10,16 @@
 
   .title {
     color: white;
-    margin:0;
-    padding:50px 20px;
+    margin: 0;
+    padding: 50px 20px;
   }
 
 }
 
 mat-grid-tile {
   background: lightblue;
+}
+
+mat-form-field input {
+  width: 100%
 }

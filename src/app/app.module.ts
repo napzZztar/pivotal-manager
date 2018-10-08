@@ -6,8 +6,14 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule, MatButtonToggleModule, MatGridListModule, MatFormFieldModule} from '@angular/material';
-import {MatDialog} from '@angular/material';
+import {
+  MatButtonModule,
+  MatButtonToggleModule,
+  MatGridListModule,
+  MatFormFieldModule,
+  MatDialogModule,
+  MatInputModule
+} from '@angular/material';
 
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
@@ -24,8 +30,9 @@ import {WebviewDirective} from './directives/webview.directive';
 
 import {AppComponent} from './app.component';
 import {HomeComponent} from './components/home/home.component';
-import { ToolbarComponent } from './components/toolbar/toolbar.component';
-import { PeopleComponent } from './components/people/people.component';
+import {ToolbarComponent} from './components/toolbar/toolbar.component';
+import {PeopleComponent} from './components/people/people.component';
+import {LoginComponent} from './components/login/login.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -38,7 +45,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     WebviewDirective,
     ToolbarComponent,
-    PeopleComponent
+    PeopleComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -57,10 +65,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatButtonModule,
     MatButtonToggleModule,
     MatGridListModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDialogModule,
+    MatInputModule
   ],
   providers: [ElectronService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LoginComponent]
 })
 export class AppModule {
 }
