@@ -1,7 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+
 html, body {
   margin: 0;
   padding: 0;
 
   height: 100%;
+}
+
+.toolbar {
+  position: fixed;
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+  width: 100%;
 }

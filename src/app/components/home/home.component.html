@@ -1,5 +1,15 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
+<div class="container" style="display: block" *ngIf="apiKey">
+  <app-toolbar class="toolbar" ></app-toolbar>
+  <div style="width: 100%; height: 64px"></div>
+
+
+  <mat-grid-list cols="2" rowHeight="100%">
+    <mat-grid-tile>1</mat-grid-tile>
+    <mat-grid-tile>2</mat-grid-tile>
+  </mat-grid-list>
 </div>
+
+<div class="container" style="display: block" *ngIf="!apiKey">
+  <div>Not logged in</div>
+</div>
+

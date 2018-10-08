@@ -1,0 +1,6 @@
+<mat-toolbar color="primary" class="toolbar" >
+  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [multiple]="true">
+    <mat-button-toggle value="bold" *ngFor="let project of projects">{{project.title}}</mat-button-toggle>
+  </mat-button-toggle-group>
+</mat-toolbar>
+

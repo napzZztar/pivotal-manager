@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  apiKey: string;
+  peoples: string[];
 
-  constructor() { }
+  constructor() {
+    this.peoples = ['AA', 'MA', 'RA'];
+    this.apiKey = localStorage.apiKey;
+  }
 
   ngOnInit() {
   }
