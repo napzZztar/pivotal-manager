@@ -1,6 +1,15 @@
-<mat-toolbar color="primary" class="toolbar" >
+some text
+<mat-toolbar color="primary" class="toolbar">
+
+  <mat-toolbar-row>
+    <span>
   <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [multiple]="true">
-    <mat-button-toggle value="bold" *ngFor="let project of projects">{{project.title}}</mat-button-toggle>
+    <mat-button-toggle *ngFor="let project of projects" value="{{project.isActive}}">{{project.projectName}}
+    </mat-button-toggle>
   </mat-button-toggle-group>
+    </span>
+    <span class="spacer"></span>
+    <mat-icon class="example-icon" (click)="logout()">power_settings_new</mat-icon>
+  </mat-toolbar-row>
 </mat-toolbar>
 

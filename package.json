@@ -40,6 +40,9 @@
     "@angular/animations": "^6.1.9",
     "@angular/cdk": "^6.4.7",
     "@angular/material": "^6.4.7",
+    "camelize": "^1.0.0",
+    "lodash": "^4.17.11",
+    "moment": "^2.22.2",
     "request-promise": "^4.2.2"
   },
   "devDependencies": {

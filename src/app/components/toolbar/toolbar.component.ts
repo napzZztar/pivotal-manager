@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PivotalService} from '../../services/pivotal.service';
+import {Router} from '@angular/router';
+
+const moment = require('moment');
 
 @Component({
   selector: 'app-toolbar',
@@ -6,17 +10,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  projects: Project[];
+  projects: Project[] = [];
 
-  constructor() { }
+  constructor(private pivotal: PivotalService, private router: Router) {
+  }
 
   ngOnInit() {
-    this.projects = [{id: 12345, title: 'SmarterProctoring'}, {id: 12345, title: 'SmarterScheduling'}];
+    this.setProjects();
+  }
+
+  setProjects() {
+    this
+      .pivotal
+      .getUserInfo()
+      .then(data => {
+        this.projects = data.projects.filter(project => {
+          const lastViewed = moment(project.lastViewedAt);
+
+          return moment().diff(lastViewed, 'w') <= 2;
+        });
+      })
+      .catch(console.error);
+  }
+
+  logout() {
+    localStorage.apiKey = '';
+    this.router.navigate(['/']);
   }
 
 }
 
 interface Project {
+  kind: string;
   id: number;
-  title: string
+  projectId: number;
+  projectName: string;
+  projectColor: string;
+  favorite: boolean;
+  role: string;
+  lastViewedAt: string;
+  isActive: boolean;
 }
