@@ -9,7 +9,10 @@ some text
   </mat-button-toggle-group>
     </span>
     <span class="spacer"></span>
-    <mat-icon class="example-icon" (click)="logout()">power_settings_new</mat-icon>
+    <button mat-icon-button (click)="logout();">
+      <mat-icon color="{{logoutClicked ? 'warn' : 'accent'}}" [style.text-shadow]="logoutClicked ? '0 0 5px' : '0 0 0'" aria-label>{{logoutIcon}}
+      </mat-icon>
+    </button>
   </mat-toolbar-row>
 </mat-toolbar>
 

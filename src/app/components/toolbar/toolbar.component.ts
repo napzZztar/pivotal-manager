@@ -10,6 +10,8 @@ const moment = require('moment');
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
+  logoutClicked: Boolean = false;
+  logoutIcon = 'power_settings_new';
   projects: Project[] = [];
 
   constructor(private pivotal: PivotalService, private router: Router) {
@@ -34,8 +36,20 @@ export class ToolbarComponent implements OnInit {
   }
 
   logout() {
-    localStorage.apiKey = '';
-    this.router.navigate(['/']);
+    if (this.logoutClicked) {
+      localStorage.apiKey = '';
+      const {remote} = require('electron');
+      const w = remote.getCurrentWindow();
+      w.close();
+    } else {
+      this.logoutClicked = true;
+      this.logoutIcon = 'backspace';
+
+      setTimeout(() => {
+        this.logoutClicked = false;
+        this.logoutIcon = 'power_settings_new';
+      }, 1500);
+    }
   }
 
 }
