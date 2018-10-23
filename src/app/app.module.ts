@@ -13,7 +13,8 @@ import {
   MatFormFieldModule,
   MatDialogModule,
   MatInputModule,
-  MatIconModule
+  MatIconModule,
+  MatCardModule
 } from '@angular/material';
 
 
@@ -35,6 +36,7 @@ import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {PeopleComponent} from './components/people/people.component';
 import {LoginComponent} from './components/login/login.component';
 import { TaskManagerComponent } from './components/task-manager/task-manager.component';
+import { StoryComponent } from './components/story/story.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -49,7 +51,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToolbarComponent,
     PeopleComponent,
     LoginComponent,
-    TaskManagerComponent
+    TaskManagerComponent,
+    StoryComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +74,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatFormFieldModule,
     MatDialogModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatCardModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent],
