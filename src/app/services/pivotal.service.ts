@@ -1,8 +1,12 @@
 import {Injectable} from '@angular/core';
 
 const camelize = require('camelize');
+const moment = require('moment');
 
 const requestPromise = require('request-promise');
+
+let projects: any[] = [];
+let user: User;
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +14,35 @@ const requestPromise = require('request-promise');
 export class PivotalService {
   token: string;
   baseUrl: string;
+  projects: any[] = [];
+  user: User;
 
   constructor() {
     this.token = localStorage.apiKey;
     this.baseUrl = 'https://www.pivotaltracker.com/services/v5';
   }
 
-  getUserInfo(): Promise<any> {
-    return this
-      .request('/me');
+  refreshUserInfo(): void {
+    this
+      .request('/me')
+      .then(data => {
+        user = {
+          name: data.name,
+          initials: data.initials,
+          id: data.id,
+          email: data.email,
+          username: data.username
+        };
+
+        projects = data.projects.filter(project => {
+          const lastViewed = moment(project.lastViewedAt);
+
+          return moment().diff(lastViewed, 'w') <= 2;
+        });
+
+        this.user = user;
+        this.projects = projects;
+      });
   }
 
   private request(options: any) {
@@ -47,3 +71,10 @@ export class PivotalService {
   }
 }
 
+interface User {
+  name: string;
+  email: string;
+  initials: string;
+  id: number;
+  username: string;
+}

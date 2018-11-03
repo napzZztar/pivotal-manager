@@ -14,7 +14,7 @@ export class ToolbarComponent implements OnInit {
   logoutIcon = 'power_settings_new';
   projects: Project[] = [];
 
-  constructor(private pivotal: PivotalService, private router: Router) {
+  constructor(public pivotal: PivotalService, private router: Router) {
   }
 
   ngOnInit() {
@@ -24,15 +24,7 @@ export class ToolbarComponent implements OnInit {
   setProjects() {
     this
       .pivotal
-      .getUserInfo()
-      .then(data => {
-        this.projects = data.projects.filter(project => {
-          const lastViewed = moment(project.lastViewedAt);
-
-          return moment().diff(lastViewed, 'w') <= 2;
-        });
-      })
-      .catch(console.error);
+      .refreshUserInfo();
   }
 
   logout() {
@@ -43,7 +35,7 @@ export class ToolbarComponent implements OnInit {
       w.close();
     } else {
       this.logoutClicked = true;
-      this.logoutIcon = 'backspace';
+      this.logoutIcon = 'exit_to_app';
 
       setTimeout(() => {
         this.logoutClicked = false;

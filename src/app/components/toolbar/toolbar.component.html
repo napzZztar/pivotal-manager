@@ -3,14 +3,15 @@ some text
 
   <mat-toolbar-row>
     <span>
-  <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [multiple]="true">
-    <mat-button-toggle *ngFor="let project of projects" value="{{project.isActive}}">{{project.projectName}}
-    </mat-button-toggle>
-  </mat-button-toggle-group>
+      <b>{{this.pivotal.user?.name}}</b>
     </span>
     <span class="spacer"></span>
+    <button mat-icon-button>
+      <mat-icon aria-label>settings</mat-icon>
+    </button>
     <button mat-icon-button (click)="logout();">
-      <mat-icon color="{{logoutClicked ? 'warn' : 'accent'}}" [style.text-shadow]="logoutClicked ? '0 0 5px' : '0 0 0'" aria-label>{{logoutIcon}}
+      <mat-icon color="{{logoutClicked ? 'warn' : ''}}" [style.text-shadow]="logoutClicked ? '0 0 5px' : '0 0 0'"
+                aria-label>{{logoutIcon}}
       </mat-icon>
     </button>
   </mat-toolbar-row>
