@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {PivotalService} from '../../services/pivotal.service';
+import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
+
+
+import {PivotalService} from '../../services/pivotal.service';
+import {SettingsComponent} from '../settings/settings.component';
 
 const moment = require('moment');
 
@@ -14,7 +18,7 @@ export class ToolbarComponent implements OnInit {
   logoutIcon = 'power_settings_new';
   projects: Project[] = [];
 
-  constructor(public pivotal: PivotalService, private router: Router) {
+  constructor(public pivotal: PivotalService, private router: Router, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -42,6 +46,10 @@ export class ToolbarComponent implements OnInit {
         this.logoutIcon = 'power_settings_new';
       }, 1500);
     }
+  }
+
+  openSettings() {
+    this.dialog.open(SettingsComponent, {width: '80%', data: {}});
   }
 
 }

@@ -37,6 +37,7 @@ import {PeopleComponent} from './components/people/people.component';
 import {LoginComponent} from './components/login/login.component';
 import { TaskManagerComponent } from './components/task-manager/task-manager.component';
 import { StoryComponent } from './components/story/story.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -52,7 +53,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PeopleComponent,
     LoginComponent,
     TaskManagerComponent,
-    StoryComponent
+    StoryComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
