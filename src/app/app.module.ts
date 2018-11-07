@@ -14,7 +14,8 @@ import {
   MatDialogModule,
   MatInputModule,
   MatIconModule,
-  MatCardModule
+  MatCardModule,
+  MatListModule
 } from '@angular/material';
 
 
@@ -35,8 +36,9 @@ import {HomeComponent} from './components/home/home.component';
 import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {PeopleComponent} from './components/people/people.component';
 import {LoginComponent} from './components/login/login.component';
-import { TaskManagerComponent } from './components/task-manager/task-manager.component';
-import { StoryComponent } from './components/story/story.component';
+import {TaskManagerComponent} from './components/task-manager/task-manager.component';
+import {StoryComponent} from './components/story/story.component';
+import {SettingsComponent} from './components/settings/settings.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -52,7 +54,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PeopleComponent,
     LoginComponent,
     TaskManagerComponent,
-    StoryComponent
+    StoryComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -75,11 +78,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     MatInputModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent]
+  entryComponents: [LoginComponent, SettingsComponent]
 })
 export class AppModule {
 }

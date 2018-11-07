@@ -1,6 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {PivotalService} from '../../services/pivotal.service';
+import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
+
+
+import {PivotalService} from '../../services/pivotal.service';
+import {SettingsComponent} from '../settings/settings.component';
+
+const _ = require('lodash');
 
 const moment = require('moment');
 
@@ -14,7 +20,7 @@ export class ToolbarComponent implements OnInit {
   logoutIcon = 'power_settings_new';
   projects: Project[] = [];
 
-  constructor(private pivotal: PivotalService, private router: Router) {
+  constructor(public pivotal: PivotalService, private router: Router, private dialog: MatDialog) {
   }
 
   ngOnInit() {
@@ -24,15 +30,10 @@ export class ToolbarComponent implements OnInit {
   setProjects() {
     this
       .pivotal
-      .getUserInfo()
-      .then(data => {
-        this.projects = data.projects.filter(project => {
-          const lastViewed = moment(project.lastViewedAt);
-
-          return moment().diff(lastViewed, 'w') <= 2;
-        });
-      })
-      .catch(console.error);
+      .refreshUserInfo()
+      .then(() => {
+        return this.pivotal.refreshMemberList();
+      });
   }
 
   logout() {
@@ -43,13 +44,22 @@ export class ToolbarComponent implements OnInit {
       w.close();
     } else {
       this.logoutClicked = true;
-      this.logoutIcon = 'backspace';
+      this.logoutIcon = 'exit_to_app';
 
       setTimeout(() => {
         this.logoutClicked = false;
         this.logoutIcon = 'power_settings_new';
       }, 1500);
     }
+  }
+
+  openSettings() {
+    this.dialog.open(SettingsComponent, {
+      width: '80%', data: {
+        projects: _.cloneDeep(this.pivotal.projects),
+        members: _.cloneDeep(this.pivotal.members)
+      }
+    });
   }
 
 }
