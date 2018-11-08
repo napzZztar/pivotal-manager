@@ -15,7 +15,10 @@ import {
   MatInputModule,
   MatIconModule,
   MatCardModule,
-  MatListModule
+  MatListModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatCheckboxModule
 } from '@angular/material';
 
 
@@ -79,7 +82,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatInputModule,
     MatIconModule,
     MatCardModule,
-    MatListModule
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent],
