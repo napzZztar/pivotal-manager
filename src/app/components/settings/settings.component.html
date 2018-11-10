@@ -1,28 +1,31 @@
+<h2 mat-dialog-title>
+  <mat-icon aria-label>settings</mat-icon>
+</h2>
 <div mat-dialog-content>
   <mat-grid-list cols="4" rowHeight="3:1">
     <mat-grid-tile [colspan]="2" [rowspan]="4">
       <mat-card class="settings-card">
         <mat-card-title>Projects</mat-card-title>
-        <mat-card-content>
+        <mat-card-content class="settings-content">
           <mat-selection-list #projectList>
             <mat-list-option *ngFor="let project of projects">
               {{project.projectName}}
             </mat-list-option>
           </mat-selection-list>
-
+          <span style="padding-top: 45px">&nbsp;</span>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2" [rowspan]="4">
       <mat-card class="settings-card">
         <mat-card-title>Members</mat-card-title>
-        <mat-card-content>
+        <mat-card-content class="settings-content">
           <mat-selection-list #projectList>
             <mat-list-option *ngFor="let member of members">
               {{member.name}} ({{member.initials}})
             </mat-list-option>
           </mat-selection-list>
-
+          <span style="padding-top: 45px">&nbsp;</span>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
@@ -45,5 +48,3 @@
   <button mat-button (click)="onNoClick()">Cancel</button>
   <button mat-button cdkFocusInitial>Save</button>
 </div>
-
-
