@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import '../polyfills';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {
@@ -85,7 +85,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatListModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ReactiveFormsModule
   ],
   providers: [ElectronService],
   bootstrap: [AppComponent],
