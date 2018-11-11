@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
 import {MatDialog} from '@angular/material';
 import {Router} from '@angular/router';
 
@@ -20,6 +20,7 @@ export class ToolbarComponent implements OnInit {
   logoutClicked: Boolean = false;
   logoutIcon = 'power_settings_new';
   projects: Project[] = [];
+  @Input() refresh: any;
 
   constructor(public pivotal: PivotalService, private router: Router, private dialog: MatDialog) {
   }
@@ -46,10 +47,16 @@ export class ToolbarComponent implements OnInit {
   }
 
   openSettings() {
-    this.dialog.open(SettingsComponent, {
+    const dialogueRef = this.dialog.open(SettingsComponent, {
       width: '80%', data: {
         projects: _.cloneDeep(this.pivotal.projects),
         members: _.cloneDeep(this.pivotal.members)
+      }
+    });
+
+    dialogueRef.afterClosed().subscribe(() => {
+      if (this.refresh) {
+        this.refresh();
       }
     });
   }
