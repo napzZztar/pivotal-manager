@@ -88,7 +88,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCheckboxModule,
     ReactiveFormsModule
   ],
-  providers: [ElectronService],
+  providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
   entryComponents: [LoginComponent, SettingsComponent]
 })

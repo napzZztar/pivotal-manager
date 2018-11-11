@@ -1,23 +1,10 @@
-<div style="overflow-x: scroll; height: 100%" [style.width]=" 452*5 + 'px'">
+<div class="task-board" [style.width]=" 452* members.length + 'px'">
   <app-toolbar class="toolbar"></app-toolbar>
   <div style="height: 100%;">
-    <div style="height: calc(100% - 70px); float: left">
-      <app-people>People name</app-people>
-    </div>
-    <div style="height: calc(100% - 70px); float: left">
-      <app-people>People name</app-people>
-    </div>
-    <div style="height: calc(100% - 70px); float: left">
-      <app-people>People name</app-people>
-    </div>
-    <div style="height: calc(100% - 70px); float: left">
-      <app-people>People name</app-people>
-    </div>
-    <div style="height: calc(100% - 70px); float: left">
-      <app-people>People name</app-people>
+    <div class="user-board" *ngFor="let member of members; trackBy: memberTracker">
+      <app-people [member]="member">People name</app-people>
     </div>
   </div>
-
 
 
 </div>

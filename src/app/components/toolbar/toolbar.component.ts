@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 
 import {PivotalService} from '../../services/pivotal.service';
 import {SettingsComponent} from '../settings/settings.component';
+import {TaskManagerComponent} from '../task-manager/task-manager.component';
 
 const _ = require('lodash');
 
@@ -24,17 +25,8 @@ export class ToolbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setProjects();
   }
 
-  setProjects() {
-    this
-      .pivotal
-      .refreshUserInfo()
-      .then(() => {
-        return this.pivotal.refreshMemberList();
-      });
-  }
 
   logout() {
     if (this.logoutClicked) {

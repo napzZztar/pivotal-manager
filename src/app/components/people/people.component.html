@@ -1,10 +1,10 @@
 <mat-card class="people">
   <mat-card-header>
-    <div mat-card-avatar></div>
-    <mat-card-title>Shiba Inu</mat-card-title>
-    <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    <!--<div mat-card-avatar></div>-->
+    <mat-card-title>{{member.name}}</mat-card-title>
+    <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
   </mat-card-header>
   <mat-card-content class="people-content">
-    <app-story *ngFor="let i of [1,2,3,4,5,6, 1,2,3,4,5,6,7,8,9,0]"></app-story>
+    <app-story *ngFor="let i of stories" [story]="i"></app-story>
   </mat-card-content>
 </mat-card>
