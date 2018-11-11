@@ -1,4 +1,5 @@
 import {Component, OnInit, Output} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {PivotalService} from '../../services/pivotal.service';
 
@@ -11,7 +12,7 @@ export class TaskManagerComponent implements OnInit {
   members: any[] = [];
   projects: any[] = [];
 
-  constructor(private pivotalService: PivotalService) {
+  constructor(private pivotalService: PivotalService, private router: Router) {
   }
 
   ngOnInit() {
@@ -37,6 +38,10 @@ export class TaskManagerComponent implements OnInit {
       .then(() => {
         this.pivotalService.syncUserAndProjectStatus();
         this.refreshLists();
+      })
+      .catch(() => {
+        localStorage.apiKey = '';
+        this.router.navigate(['/']);
       });
   }
 }
