@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {promise} from 'selenium-webdriver';
 
 const camelize = require('camelize');
 const moment = require('moment');

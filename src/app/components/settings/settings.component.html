@@ -1,49 +1,54 @@
+<h2 mat-dialog-title>
+  <mat-icon aria-label>settings</mat-icon>
+</h2>
 <div mat-dialog-content>
   <mat-grid-list cols="4" rowHeight="3:1">
     <mat-grid-tile [colspan]="2" [rowspan]="4">
       <mat-card class="settings-card">
         <mat-card-title>Projects</mat-card-title>
-        <mat-card-content>
-          <mat-selection-list #projectList>
-            <mat-list-option *ngFor="let project of projects">
+        <mat-card-content class="settings-content">
+          <mat-selection-list #projectList [(ngModel)]="settingsData.enabledProjects">
+            <mat-list-option *ngFor="let project of projects" [value]="project.id">
               {{project.projectName}}
             </mat-list-option>
           </mat-selection-list>
-
+          <span style="padding-top: 45px">&nbsp;</span>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="2" [rowspan]="4">
       <mat-card class="settings-card">
         <mat-card-title>Members</mat-card-title>
-        <mat-card-content>
-          <mat-selection-list #projectList>
-            <mat-list-option *ngFor="let member of members">
+        <mat-card-content class="settings-content">
+          <mat-selection-list #memberList [(ngModel)]="settingsData.enabledMembers">
+            <mat-list-option *ngFor="let member of members" [value]="member.id">
               {{member.name}} ({{member.initials}})
             </mat-list-option>
           </mat-selection-list>
-
+          <span style="padding-top: 45px">&nbsp;</span>
         </mat-card-content>
       </mat-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1">
       <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Start Date">
+        <input matInput #dateInput [matDatepicker]="picker" placeholder="Start Date" [formControl]="settingsData.startDate"
+               [max]="maxDate">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1">
-      <mat-checkbox>Include Upcoming</mat-checkbox>
+      <mat-checkbox [(ngModel)]="settingsData.includeDone">Include Done</mat-checkbox>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1">
-      <mat-checkbox>Track History</mat-checkbox>
+      <mat-checkbox [(ngModel)]="settingsData.includeUpcoming">Include Upcoming</mat-checkbox>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1">
+      <mat-checkbox [(ngModel)]="settingsData.trackHistory">Track History</mat-checkbox>
     </mat-grid-tile>
   </mat-grid-list>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancel</button>
-  <button mat-button cdkFocusInitial>Save</button>
+  <button mat-button cdkFocusInitial (click)="saveSettings()">{{saveText}}</button>
 </div>
-
-
