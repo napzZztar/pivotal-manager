@@ -1,5 +1,5 @@
 {
-  "name": "angular-electron",
+  "name": "pivotal-manager",
   "version": "4.2.2",
   "description": "Angular 6 with Electron (Typescript + SASS + Hot Reload)",
   "homepage": "https://github.com/maximegris/angular-electron",
