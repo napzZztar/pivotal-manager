@@ -1,5 +1,7 @@
 import {Injectable} from '@angular/core';
 
+import {DataStorageService} from './data-storage.service';
+
 const camelize = require('camelize');
 const moment = require('moment');
 const _ = require('lodash');
@@ -20,7 +22,7 @@ export class PivotalService {
   user: User;
   members: User[];
 
-  constructor() {
+  constructor(private dataStorageService: DataStorageService) {
     this.token = localStorage.apiKey;
     this.baseUrl = 'https://www.pivotaltracker.com/services/v5';
 
@@ -38,7 +40,8 @@ export class PivotalService {
           initials: data.initials,
           id: data.id,
           email: data.email,
-          username: data.username
+          username: data.username,
+          isEnabled: false
         };
 
         projects = data.projects.filter(project => {
@@ -83,6 +86,19 @@ export class PivotalService {
       });
   }
 
+  syncUserAndProjectStatus() {
+    const {enabledProjects, enabledMembers} = this.dataStorageService.getSettings();
+
+    projects.forEach(project => {
+      project.isEnabled = enabledProjects.includes(project.id);
+    });
+
+
+    members.forEach(member => {
+      member.isEnabled = enabledMembers.includes(member.id);
+    });
+  }
+
   private request(options: any) {
     const requestOptions: any = {
       headers: {
@@ -115,4 +131,5 @@ interface User {
   initials: string;
   id: number;
   username: string;
+  isEnabled: boolean;
 }

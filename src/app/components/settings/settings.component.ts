@@ -2,6 +2,8 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {DataStorageService} from '../../services/data-storage.service';
+import {PivotalService} from '../../services/pivotal.service';
+import {TaskManagerComponent} from '../task-manager/task-manager.component';
 
 const _ = require('lodash');
 const moment = require('moment');
@@ -21,6 +23,8 @@ export class SettingsComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<SettingsComponent>,
     private dataStorageService: DataStorageService,
+    private pivotalService: PivotalService,
+    private taskManagerComponent: TaskManagerComponent,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
   }
@@ -64,6 +68,10 @@ export class SettingsComponent implements OnInit {
       .saveSettings(settings)
       .then(() => {
         this.saveText = 'Saved';
+
+        this.pivotalService.syncUserAndProjectStatus();
+        this.taskManagerComponent.refreshLists();
+
         setTimeout(() => {
           this.dialogRef.close();
         }, 500);
