@@ -33,7 +33,10 @@ export class DataStorageService {
       const jsonString = fs.readFileSync(path, {encoding: 'utf8'});
       return JSON.parse(jsonString);
     } catch (ex) {
-      return {};
+      return {
+        enabledProjects: [],
+        enabledMembers: []
+      };
     }
   }
 
