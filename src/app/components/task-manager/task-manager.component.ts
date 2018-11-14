@@ -1,5 +1,8 @@
 import {Component, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
+import {MatDialog} from '@angular/material';
+import {SpinnerComponent} from '../spinner/spinner.component';
+
 
 import {PivotalService} from '../../services/pivotal.service';
 
@@ -11,12 +14,26 @@ import {PivotalService} from '../../services/pivotal.service';
 export class TaskManagerComponent implements OnInit {
   members: any[] = [];
   projects: any[] = [];
+  dialogRef: any;
 
-  constructor(private pivotalService: PivotalService, private router: Router) {
+  constructor(private pivotalService: PivotalService, private router: Router, private dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.setProjects();
+  }
+
+  openSpinner() {
+    this.dialogRef = this.dialog.open(SpinnerComponent, {
+      width: '100%',
+      height: '100%',
+      maxWidth: '100%'
+    });
+  }
+
+  closeSpinner() {
+    this.dialogRef.close();
+    this.dialog.openDialogs.pop();
   }
 
   refreshLists() {
@@ -29,6 +46,9 @@ export class TaskManagerComponent implements OnInit {
   }
 
   setProjects() {
+    setTimeout(()  => {
+      this.openSpinner();
+    });
     this
       .pivotalService
       .refreshUserInfo()
@@ -38,8 +58,10 @@ export class TaskManagerComponent implements OnInit {
       .then(() => {
         this.pivotalService.syncUserAndProjectStatus();
         this.refreshLists();
+        this.closeSpinner();
       })
       .catch(() => {
+        this.closeSpinner();
         localStorage.apiKey = '';
         this.router.navigate(['/']);
       });

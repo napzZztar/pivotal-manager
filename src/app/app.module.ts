@@ -42,6 +42,7 @@ import {LoginComponent} from './components/login/login.component';
 import {TaskManagerComponent} from './components/task-manager/task-manager.component';
 import {StoryComponent} from './components/story/story.component';
 import {SettingsComponent} from './components/settings/settings.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -58,7 +59,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     TaskManagerComponent,
     StoryComponent,
-    SettingsComponent
+    SettingsComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent, SettingsComponent]
+  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent]
 })
 export class AppModule {
 }
