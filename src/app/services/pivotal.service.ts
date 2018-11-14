@@ -41,7 +41,8 @@ export class PivotalService {
           id: data.id,
           email: data.email,
           username: data.username,
-          isEnabled: false
+          isEnabled: false,
+          stories: []
         };
 
         projects = data.projects.filter(project => {
@@ -82,12 +83,24 @@ export class PivotalService {
       .then(memberships => {
         members = _.orderBy(_.uniqBy([].concat(...memberships), 'id'), 'initials');
 
+        members = members.map(member => {
+          return {
+            name: member.name,
+            initials: member.initials,
+            id: member.id,
+            email: member.email,
+            username: member.username,
+            isEnabled: false,
+            stories: []
+          };
+        });
+
         this.members = members;
       });
   }
 
-  syncUserAndProjectStatus() {
-    const {enabledProjects, enabledMembers} = this.dataStorageService.getSettings();
+  syncUserAndProjectStatus(): Promise<any> {
+    const {enabledProjects, enabledMembers, startDate} = this.dataStorageService.getSettings();
 
     projects.forEach(project => {
       project.isEnabled = enabledProjects.includes(project.id);
@@ -97,6 +110,52 @@ export class PivotalService {
     members.forEach(member => {
       member.isEnabled = enabledMembers.includes(member.id);
     });
+
+    return this.refreshUserStories(startDate);
+  }
+
+  refreshUserStories(startDate: string): Promise<any> {
+    const promises = [];
+    const memberMap = this._getEnabledMemberMap();
+
+    this.projects.forEach(project => {
+      promises.push(this.listStories(project.projectId, startDate));
+    });
+
+    return Promise
+      .all(promises)
+      .then(results => {
+        results.forEach(stories => {
+          this._pushStiesToMembers(memberMap, stories);
+        });
+      });
+  }
+
+  listStories(projectId: string, startDate: string) {
+    return this.request({
+      uri: `/projects/${projectId}/stories`,
+      updated_after: startDate
+    });
+  }
+
+  _pushStiesToMembers(memberMap, stories) {
+    stories.forEach((story) => {
+      story.ownerIds.forEach(ownerId => {
+        if (memberMap[ownerId]) {
+          memberMap[ownerId].stories.push(story);
+        }
+      });
+    });
+  }
+
+  _getEnabledMemberMap() {
+    const map = {};
+
+    this.members.forEach(member => {
+      map[member.id] = member;
+    });
+
+    return map;
   }
 
   private request(options: any) {
@@ -111,7 +170,7 @@ export class PivotalService {
       requestOptions.url = this.baseUrl + options;
       requestOptions.method = 'GET';
     } else {
-      options.url = this.baseUrl + options.url;
+      options.uri = this.baseUrl + options.uri;
 
       Object.assign(requestOptions, options);
     }
@@ -132,4 +191,5 @@ interface User {
   id: number;
   username: string;
   isEnabled: boolean;
+  stories: any[];
 }
