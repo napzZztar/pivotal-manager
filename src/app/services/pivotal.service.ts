@@ -116,10 +116,15 @@ export class PivotalService {
 
   refreshUserStories(startDate: string): Promise<any> {
     const promises = [];
-    const memberMap = this._getEnabledMemberMap();
+    const memberMap = this._getMemberMap();
+    this.members.map(member => {
+      member.stories = [];
+    });
 
     this.projects.forEach(project => {
-      promises.push(this.listStories(project.projectId, startDate));
+      if (project.isEnabled) {
+        promises.push(this.listStories(project, startDate));
+      }
     });
 
     return Promise
@@ -128,27 +133,41 @@ export class PivotalService {
         results.forEach(stories => {
           this._pushStiesToMembers(memberMap, stories);
         });
+
+        this.members.forEach(member => {
+          member.stories = _.orderBy(member.stories, 'updatedAt');
+        });
       });
   }
 
-  listStories(projectId: string, startDate: string) {
-    return this.request({
-      uri: `/projects/${projectId}/stories`,
-      updated_after: startDate
-    });
+  listStories(project: any, startDate: string) {
+    return this
+      .request({
+        uri: `/projects/${project.projectId}/stories`,
+        qs: {
+          updated_after: startDate
+        }
+      })
+      .then(stories => {
+        return stories.map(story => {
+          story.projectName = project.projectName;
+          return story;
+        });
+      });
   }
 
   _pushStiesToMembers(memberMap, stories) {
     stories.forEach((story) => {
       story.ownerIds.forEach(ownerId => {
-        if (memberMap[ownerId]) {
+        if (memberMap[ownerId] && memberMap[ownerId].isEnabled) {
+          story.expanded = false;
           memberMap[ownerId].stories.push(story);
         }
       });
     });
   }
 
-  _getEnabledMemberMap() {
+  _getMemberMap() {
     const map = {};
 
     this.members.forEach(member => {
