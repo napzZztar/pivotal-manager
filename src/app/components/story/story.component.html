@@ -1,19 +1,22 @@
 <mat-expansion-panel (opened)="story.expanded = true"
                      (closed)="story.expanded = false" [hideToggle]="true" matTooltip="story.name">
-  <mat-expansion-panel-header>
-    <mat-panel-description >
-      <mat-checkbox></mat-checkbox>
+  <mat-expansion-panel-header class="story-item">
+    <mat-panel-description>
+      <mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox>
       &nbsp;<mat-icon>{{statusMap[story.currentState]}}</mat-icon>
-      &nbsp;<mat-icon>{{typeMap[story.storyType]}}</mat-icon>
+      {{story.expanded ? '&nbsp;' : ''}}
+      <mat-icon *ngIf="story.expanded">{{typeMap[story.storyType]}}</mat-icon>
       &nbsp;<mat-icon>{{numberMap[story.estimate]}}</mat-icon>
       &nbsp;#{{story.id}}
-      &nbsp;<b>{{getAbbvr(story.projectName)}}</b>
-      &nbsp;{{story.expanded ? story.name : getShortForm(story.name)}}
+      &nbsp;<b>{{story.expanded ? story.projectName : getAbbvr(story.projectName)}}</b>
+      &nbsp;{{story.expanded ? '' : getShortForm(story.name)}}
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <button mat-stroked-button (click)="copyText(story.url)">#{{story.id}}</button>
+  <p>
+    {{story.name}}
+  </p>
+  <button mat-button (click)="copyText(story.url)">#{{story.id}}</button>
   <button mat-icon-button (click)="copyBranchName(story)">
     <mat-icon>call_split</mat-icon>
   </button>
 </mat-expansion-panel>
-

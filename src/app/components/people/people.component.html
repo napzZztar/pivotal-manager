@@ -5,6 +5,8 @@
     <!--<mat-card-subtitle>Dog Breed</mat-card-subtitle>-->
   </mat-card-header>
   <mat-card-content class="people-content">
-    <app-story *ngFor="let story of member?.stories" [story]="story"></app-story>
+    <mat-accordion [multi]="true">
+      <app-story *ngFor="let story of member?.stories" [story]="story"></app-story>
+    </mat-accordion>
   </mat-card-content>
 </mat-card>
