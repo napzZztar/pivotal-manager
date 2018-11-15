@@ -12,11 +12,24 @@
       &nbsp;{{story.expanded ? '' : getShortForm(story.name)}}
     </mat-panel-description>
   </mat-expansion-panel-header>
-  <p>
-    {{story.name}}
-  </p>
-  <button mat-button (click)="copyText(story.url)">#{{story.id}}</button>
-  <button mat-icon-button (click)="copyBranchName(story)">
-    <mat-icon>call_split</mat-icon>
-  </button>
+  <mat-list>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      {{story.name}}
+    </mat-list-item>
+    <mat-divider *ngIf="story?.labels?.length"></mat-divider>
+    <mat-list-item *ngIf="story?.labels?.length">
+      <mat-chip-list>
+        <mat-chip *ngFor="let label of story.labels">{{label.name}}</mat-chip>
+      </mat-chip-list>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+    <mat-list-item>
+      <button mat-button (click)="openSnackBar('Copied: ' + copyText(story.url), 'Close')">#{{story.id}}</button>
+      <button mat-icon-button (click)="openSnackBar('Copied: ' + copyBranchName(story), 'Close')">
+        <mat-icon>call_split</mat-icon>
+      </button>
+    </mat-list-item>
+
+  </mat-list>
 </mat-expansion-panel>

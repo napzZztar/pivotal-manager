@@ -1,4 +1,5 @@
 import {Component, OnInit, Input} from '@angular/core';
+import {MatSnackBar} from '@angular/material';
 
 const _ = require('lodash');
 const clipboard = require('electron').remote.clipboard;
@@ -35,7 +36,7 @@ export class StoryComponent implements OnInit {
     5: 'looks_5'
   };
 
-  constructor() {
+  constructor(private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -47,11 +48,12 @@ export class StoryComponent implements OnInit {
 
   copyText(textToCopy: string) {
     clipboard.writeText(textToCopy);
+
+    return textToCopy;
   }
 
   copyBranchName(story) {
     let branchName = '';
-    console.log(story);
 
     switch (story.storyType) {
       case 'feature':
@@ -65,11 +67,19 @@ export class StoryComponent implements OnInit {
     branchName += story.id + '-' + _.kebabCase(story.name);
 
     this.copyText(branchName);
+
+    return branchName;
   }
 
   getAbbvr(word: string) {
-    let chars = word.match(/([A-Z])|( \w)/gm);
+    const chars = word.match(/([A-Z])|( \w)/gm);
 
     return chars.join('').toUpperCase();
+  }
+
+  openSnackBar(message: string, action: string = 'Close') {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 }
