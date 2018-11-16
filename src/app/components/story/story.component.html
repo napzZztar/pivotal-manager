@@ -2,7 +2,7 @@
                      (closed)="story.expanded = false" [hideToggle]="true" matTooltip="story.name">
   <mat-expansion-panel-header class="story-item">
     <mat-panel-description>
-      <mat-checkbox (click)="$event.stopPropagation()"></mat-checkbox>
+      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="story.enabled"></mat-checkbox>
       &nbsp;<mat-icon>{{statusMap[story.currentState]}}</mat-icon>
       {{story.expanded ? '&nbsp;' : ''}}
       <mat-icon *ngIf="story.expanded">{{typeMap[story.storyType]}}</mat-icon>
@@ -25,7 +25,12 @@
     </mat-list-item>
     <mat-divider></mat-divider>
     <mat-list-item>
-      <button mat-button (click)="openSnackBar('Copied: ' + copyText(story.url), 'Close')">#{{story.id}}</button>
+      <button mat-icon-button (click)="openSnackBar('Copied: ' + copyText('#'+story.id), 'Close')">
+        <b style="font-size: x-large">#</b>
+      </button>
+      <button mat-icon-button (click)="openSnackBar('Copied: ' + copyText(story.url), 'Close')">
+        <mat-icon>link</mat-icon>
+      </button>
       <button mat-icon-button (click)="openSnackBar('Copied: ' + copyBranchName(story), 'Close')">
         <mat-icon>call_split</mat-icon>
       </button>
