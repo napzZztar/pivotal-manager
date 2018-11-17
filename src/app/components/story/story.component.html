@@ -2,7 +2,7 @@
                      (closed)="story.expanded = false" [hideToggle]="true" matTooltip="story.name">
   <mat-expansion-panel-header class="story-item">
     <mat-panel-description>
-      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="story.enabled"></mat-checkbox>
+      <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="story.isEnabled"></mat-checkbox>
       &nbsp;<mat-icon>{{statusMap[story.currentState]}}</mat-icon>
       {{story.expanded ? '&nbsp;' : ''}}
       <mat-icon *ngIf="story.expanded">{{typeMap[story.storyType]}}</mat-icon>

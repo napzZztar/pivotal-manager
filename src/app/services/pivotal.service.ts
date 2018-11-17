@@ -11,6 +11,7 @@ const requestPromise = require('request-promise');
 let projects: any[] = [];
 let user: User;
 let members: User[] = [];
+let stories: any[] = [];
 
 @Injectable({
   providedIn: 'root'
@@ -130,8 +131,11 @@ export class PivotalService {
     return Promise
       .all(promises)
       .then(results => {
-        results.forEach(stories => {
-          this._pushStiesToMembers(memberMap, stories);
+        stories = [];
+
+        results.forEach(projectStories => {
+          stories = stories.concat(...projectStories);
+          this._pushStiesToMembers(memberMap, projectStories);
         });
 
         this.members.forEach(member => {
@@ -148,19 +152,23 @@ export class PivotalService {
           updated_after: startDate
         }
       })
-      .then(stories => {
-        return stories.map(story => {
+      .then(projectStories => {
+        return projectStories.map(story => {
           story.projectName = project.projectName;
           return story;
         });
       });
   }
 
-  _pushStiesToMembers(memberMap, stories) {
-    stories.forEach((story) => {
+  _pushStiesToMembers(memberMap, projectStories) {
+    projectStories.forEach((story) => {
       story.ownerIds.forEach(ownerId => {
         if (memberMap[ownerId] && memberMap[ownerId].isEnabled) {
           story.expanded = false;
+
+          if (ownerId === user.id) {
+            story.isEnabled = true;
+          }
           memberMap[ownerId].stories.push(story);
         }
       });
