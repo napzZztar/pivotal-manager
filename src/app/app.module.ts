@@ -18,7 +18,10 @@ import {
   MatListModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatExpansionModule,
+  MatSnackBarModule,
+  MatChipsModule
 } from '@angular/material';
 
 
@@ -88,11 +91,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDatepickerModule,
     MatNativeDateModule,
     MatCheckboxModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatChipsModule
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent]
+  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent],
+  exports: [
+    MatSnackBarModule
+  ]
 })
 export class AppModule {
 }

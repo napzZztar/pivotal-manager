@@ -11,8 +11,6 @@ export class PeopleComponent implements OnInit {
   stories: any[];
 
   constructor() {
-    const length = parseInt((Math.random() * 10).toString(), null) + 8;
-    this.stories = Array(length).fill(1).map((v, i) => i);
   }
 
   ngOnInit() {

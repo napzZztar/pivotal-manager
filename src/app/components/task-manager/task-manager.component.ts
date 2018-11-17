@@ -56,11 +56,14 @@ export class TaskManagerComponent implements OnInit {
         return this.pivotalService.refreshMemberList();
       })
       .then(() => {
-        this.pivotalService.syncUserAndProjectStatus();
+        return this.pivotalService.syncUserAndProjectStatus();
+      })
+      .then(() => {
         this.refreshLists();
         this.closeSpinner();
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
         this.closeSpinner();
         localStorage.apiKey = '';
         this.router.navigate(['/']);
