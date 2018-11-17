@@ -5,14 +5,37 @@
       <b>{{this.pivotal.user?.name}}</b>
     </span>
     <span class="spacer"></span>
-    <button mat-icon-button (click)="openSettings()">
-      <mat-icon aria-label>settings</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="settings">
+      <mat-icon>menu</mat-icon>
     </button>
-    <button mat-icon-button (click)="logout();">
-      <mat-icon color="{{logoutClicked ? 'warn' : ''}}" [style.text-shadow]="logoutClicked ? '0 0 5px' : '0 0 0'"
-                aria-label>{{logoutIcon}}
-      </mat-icon>
-    </button>
+
+    <mat-menu #settings="matMenu">
+      <button mat-menu-item (click)="navigateTo('task-manager')">
+        <mat-icon aria-label>home</mat-icon> Home
+      </button>
+      <button mat-menu-item [matMenuTriggerFor]="meetingNotes">
+        <mat-icon aria-label>table_chart</mat-icon>Meeting Notes
+      </button>
+      <button mat-menu-item (click)="refreshClick()">
+        <mat-icon aria-label>refresh</mat-icon> Refresh
+      </button>
+      <button mat-menu-item (click)="openSettings()">
+        <mat-icon aria-label>settings</mat-icon> Settings
+      </button>
+      <button mat-menu-item (click)="$event.stopPropagation(); logout();"
+              [style.text-shadow]="logoutClicked ? '0 0 7px #F00' : '0 0 0'">
+        <mat-icon color="{{logoutClicked ? 'warn' : ''}}" [style.text-shadow]="logoutClicked ? '0 0 7px #F00' : '0 0 0'" [style.text-color]="'#F00'"
+                  aria-label>{{logoutIcon}}
+        </mat-icon>
+        Logout
+      </button>
+    </mat-menu>
+
+    <mat-menu #meetingNotes="matMenu">
+      <button mat-menu-item (click)="navigateTo('meeting-notes-edit')">Edit</button>
+      <button mat-menu-item>Export</button>
+    </mat-menu>
+
   </mat-toolbar-row>
 </mat-toolbar>
 
