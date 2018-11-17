@@ -21,7 +21,8 @@ import {
   MatCheckboxModule,
   MatExpansionModule,
   MatSnackBarModule,
-  MatChipsModule
+  MatChipsModule,
+  MatMenuModule
 } from '@angular/material';
 
 
@@ -46,6 +47,7 @@ import {TaskManagerComponent} from './components/task-manager/task-manager.compo
 import {StoryComponent} from './components/story/story.component';
 import {SettingsComponent} from './components/settings/settings.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { MeetingNoteEditComponent } from './meeting-note-edit/meeting-note-edit.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -63,7 +65,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TaskManagerComponent,
     StoryComponent,
     SettingsComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    MeetingNoteEditComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +96,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatCheckboxModule,
     ReactiveFormsModule,
     MatExpansionModule,
-    MatChipsModule
+    MatChipsModule,
+    MatMenuModule
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],

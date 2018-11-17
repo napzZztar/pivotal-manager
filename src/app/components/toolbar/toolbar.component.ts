@@ -21,6 +21,7 @@ export class ToolbarComponent implements OnInit {
   logoutIcon = 'power_settings_new';
   projects: Project[] = [];
   @Input() refresh: any;
+  @Input() fetch: any;
 
   constructor(public pivotal: PivotalService, private router: Router, private dialog: MatDialog) {
   }
@@ -59,6 +60,16 @@ export class ToolbarComponent implements OnInit {
         this.refresh();
       }
     });
+  }
+
+  navigateTo(location: string) {
+    this.router.navigate([`/${location}`]);
+  }
+
+  refreshClick() {
+    if (this.fetch) {
+      this.fetch();
+    }
   }
 
 }
