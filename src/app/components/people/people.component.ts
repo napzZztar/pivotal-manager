@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
+import {store} from '@angular/core/src/render3/instructions';
 
 @Component({
   selector: 'app-people',
@@ -6,8 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./people.component.scss']
 })
 export class PeopleComponent implements OnInit {
+  @Input() member: any;
+  stories: any[];
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

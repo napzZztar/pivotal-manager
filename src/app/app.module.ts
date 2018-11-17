@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import '../polyfills';
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {
@@ -14,7 +14,14 @@ import {
   MatDialogModule,
   MatInputModule,
   MatIconModule,
-  MatCardModule
+  MatCardModule,
+  MatListModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatCheckboxModule,
+  MatExpansionModule,
+  MatSnackBarModule,
+  MatChipsModule
 } from '@angular/material';
 
 
@@ -35,9 +42,10 @@ import {HomeComponent} from './components/home/home.component';
 import {ToolbarComponent} from './components/toolbar/toolbar.component';
 import {PeopleComponent} from './components/people/people.component';
 import {LoginComponent} from './components/login/login.component';
-import { TaskManagerComponent } from './components/task-manager/task-manager.component';
-import { StoryComponent } from './components/story/story.component';
-import { SettingsComponent } from './components/settings/settings.component';
+import {TaskManagerComponent} from './components/task-manager/task-manager.component';
+import {StoryComponent} from './components/story/story.component';
+import {SettingsComponent} from './components/settings/settings.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -54,7 +62,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LoginComponent,
     TaskManagerComponent,
     StoryComponent,
-    SettingsComponent
+    SettingsComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -77,11 +86,21 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatDialogModule,
     MatInputModule,
     MatIconModule,
-    MatCardModule
+    MatCardModule,
+    MatListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatCheckboxModule,
+    ReactiveFormsModule,
+    MatExpansionModule,
+    MatChipsModule
   ],
-  providers: [ElectronService],
+  providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent]
+  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent],
+  exports: [
+    MatSnackBarModule
+  ]
 })
 export class AppModule {
 }

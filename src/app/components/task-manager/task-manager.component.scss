@@ -1,1 +1,9 @@
+.task-board {
+  overflow-x: auto;
+  height: 100%
+}
 
+.user-board {
+  height: calc(100% - 70px);
+  float: left
+}
