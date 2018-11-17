@@ -22,6 +22,7 @@ export class PivotalService {
   projects: any[] = [];
   user: User;
   members: User[];
+  stories: any[];
 
   constructor(private dataStorageService: DataStorageService) {
     this.token = localStorage.apiKey;
@@ -30,6 +31,7 @@ export class PivotalService {
     this.user = user;
     this.projects = projects;
     this.members = members;
+    this.stories = stories;
   }
 
   refreshUserInfo(): Promise<any> {
@@ -141,6 +143,8 @@ export class PivotalService {
         this.members.forEach(member => {
           member.stories = _.orderBy(member.stories, 'updatedAt');
         });
+
+        this.stories = stories;
       });
   }
 

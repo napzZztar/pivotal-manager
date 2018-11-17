@@ -24,6 +24,7 @@ import {
   MatChipsModule,
   MatMenuModule
 } from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
@@ -47,7 +48,7 @@ import {TaskManagerComponent} from './components/task-manager/task-manager.compo
 import {StoryComponent} from './components/story/story.component';
 import {SettingsComponent} from './components/settings/settings.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { MeetingNoteEditComponent } from './meeting-note-edit/meeting-note-edit.component';
+import { MeetingNoteEditComponent } from './components/meeting-note-edit/meeting-note-edit.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -97,7 +98,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MatExpansionModule,
     MatChipsModule,
-    MatMenuModule
+    MatMenuModule,
+    DragDropModule
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
