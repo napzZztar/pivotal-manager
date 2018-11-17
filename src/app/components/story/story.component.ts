@@ -74,7 +74,7 @@ export class StoryComponent implements OnInit {
   getAbbvr(word: string) {
     const chars = word.match(/([A-Z])|( \w)/gm);
 
-    return chars.join('').toUpperCase();
+    return chars.join('').toUpperCase().replace(/ /gm, '');
   }
 
   openSnackBar(message: string, action: string = 'Close') {
