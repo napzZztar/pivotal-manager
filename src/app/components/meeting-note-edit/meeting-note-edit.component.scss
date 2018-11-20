@@ -1,32 +1,33 @@
 .meeting-notes{
   padding: 66px 2px 2px 2px;
   background: #4e4e4e;
-  width: 100%;
-  height: calc(100% - 68px);
+  width: 100%
 }
 
 .meeting-container {
-  width: 100%;
+  width: calc(33% - 38px);
   max-width: 100%;
   margin: 5px;
   display: inline-block;
+  float: left;
   vertical-align: top;
 }
 
 .example-list {
   border: solid 1px #ccc;
-  min-height: 60px;
-  background: white;
+  min-height: 150px;
+  height: calc(100% - 50px);
+  background: #4e4e4e;
   border-radius: 4px;
   overflow: hidden;
   display: block;
 }
 
 .example-box {
-  padding: 20px 10px;
+  padding: 10px 10px;
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
-  display: flex;
+  display: block;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
@@ -34,6 +35,7 @@
   cursor: move;
   background: white;
   font-size: 14px;
+  vertical-align: center;
 }
 
 .cdk-drag-preview {

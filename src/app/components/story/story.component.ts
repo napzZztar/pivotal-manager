@@ -43,7 +43,7 @@ export class StoryComponent implements OnInit {
   }
 
   getShortForm(str: string) {
-    return str.substr(0, 32) + (str.length >= 32 ? '..' : '');
+    return str.substr(0, 27) + (str.length >= 27 ? '..' : '');
   }
 
   copyText(textToCopy: string) {
