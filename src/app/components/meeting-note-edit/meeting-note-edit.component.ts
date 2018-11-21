@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {PivotalService} from '../../services/pivotal.service';
+import {MeetingNotesService} from '../../meeting-notes.service';
 
 @Component({
   selector: 'app-meeting-note-edit',
@@ -9,6 +10,7 @@ import {PivotalService} from '../../services/pivotal.service';
 })
 export class MeetingNoteEditComponent implements OnInit {
   excluded: any = [];
+  stories: any[] = [];
   statusMap = {
     unscheduled: 'ac_unit',
     unstarted: 'playlist_add_',
@@ -18,7 +20,7 @@ export class MeetingNoteEditComponent implements OnInit {
     rejected: 'close',
     started: 'play_arrow'
   };
-  stories: any = {
+  classifiedStories: any = {
     completed: [],
     continued: [],
     postponed: [],
@@ -26,11 +28,11 @@ export class MeetingNoteEditComponent implements OnInit {
     new: []
   };
 
-  constructor(private pivotal: PivotalService) {
-    this.stories.completed = this.pivotal.stories
-      .filter(story => story.isEnabled && (story.currentState === 'delivered' || story.currentState === 'finished' || story.currentState === 'accepted'));
-    this.stories.continued = this.pivotal.stories.filter(story => story.isEnabled && story.currentState === 'started');
-    console.log(this.pivotal.stories);
+  constructor(private pivotal: PivotalService, private meetingNotesService: MeetingNotesService) {
+    this.stories = this.pivotal.stories;
+    this.classifiedStories = this
+      .meetingNotesService
+      .classifyMeetingStories(pivotal.user, this.stories);
   }
 
   ngOnInit() {
