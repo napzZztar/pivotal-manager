@@ -8,7 +8,7 @@ export class MeetingNotesService {
   constructor() {
   }
 
-  classifyMeetingStories(user, stories, previousMeetingNote = []) {
+  classifyMeetingStories(user, memberMap, stories, previousMeetingNote = []) {
     const classifiedStories = {
       completed: [],
       continued: [],
@@ -23,6 +23,7 @@ export class MeetingNotesService {
 
         story.comment = '';
         story.prePlanned = wasInLastNote ? 'Yes' : 'No';
+        story.ownerKeys = story.ownerIds.map(id => memberMap[id].initials);
 
         switch (story.currentState) {
           case 'delivered':
@@ -38,7 +39,7 @@ export class MeetingNotesService {
 
             if (!isMine) {
               classifiedStories.cancelled.push(story);
-              story.comment = 'Transferred to ' + story.ownerIds.join(', ');
+              story.comment = 'Transferred to ' + story.ownerIds.map(id => memberMap[id].name).join(', ');
             } else if (wasInLastNote) {
               classifiedStories.postponed.push(story);
               story.comment = 'Due to priority';

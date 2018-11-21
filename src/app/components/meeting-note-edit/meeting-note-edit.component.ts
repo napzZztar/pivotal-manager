@@ -30,12 +30,13 @@ export class MeetingNoteEditComponent implements OnInit {
 
   constructor(private pivotal: PivotalService, private meetingNotesService: MeetingNotesService) {
     this.stories = this.pivotal.stories;
-    this.classifiedStories = this
-      .meetingNotesService
-      .classifyMeetingStories(pivotal.user, this.stories);
   }
 
   ngOnInit() {
+    const memberMap = this.pivotal.getMemberMap();
+    this.classifiedStories = this
+      .meetingNotesService
+      .classifyMeetingStories(this.pivotal.user, memberMap, this.stories);
   }
 
   drop(event: CdkDragDrop<string[]>) {

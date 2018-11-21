@@ -119,7 +119,7 @@ export class PivotalService {
 
   refreshUserStories(startDate: string): Promise<any> {
     const promises = [];
-    const memberMap = this._getMemberMap();
+    const memberMap = this.getMemberMap();
     this.members.map(member => {
       member.stories = [];
     });
@@ -179,7 +179,7 @@ export class PivotalService {
     });
   }
 
-  _getMemberMap() {
+  getMemberMap() {
     const map = {};
 
     this.members.forEach(member => {

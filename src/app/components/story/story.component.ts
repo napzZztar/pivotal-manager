@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {FormControl} from '@angular/forms';
 
 const _ = require('lodash');
 const clipboard = require('electron').remote.clipboard;
