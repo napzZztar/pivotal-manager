@@ -6,95 +6,78 @@
 
       <div style="overflow-y: scroll">
 
-        <div
+        <mat-accordion
             cdkDropList
             #completedStories="cdkDropList"
             [cdkDropListData]="stories.completed"
             [cdkDropListConnectedTo]="[continuedStories, postponedSoties, newStories, excludedStories, cancelledStories]"
             class="example-list"
             (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let item of stories.completed" cdkDrag>
-            <mat-icon [inline]="true">{{statusMap[item.currentState]}}</mat-icon>
-            #{{item.id}} {{item.name}}
-          </div>
-        </div>
+          <app-meeting-note-item *ngFor="let item of stories.completed" [story]="item" cdkDrag></app-meeting-note-item>
+        </mat-accordion>
       </div>
     </mat-card>
     <mat-card class="meeting-container">
       <h2>Continued</h2>
-      <div
+      <mat-accordion
           cdkDropList
           #continuedStories="cdkDropList"
           [cdkDropListData]="stories.continued"
           [cdkDropListConnectedTo]="[completedStories, postponedSoties, newStories, excludedStories, cancelledStories]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of stories.continued" cdkDrag>
-          <mat-icon [inline]="true">{{statusMap[item.currentState]}}</mat-icon>
-          #{{item.id}} {{item.name}}
-        </div>
-      </div>
+        <app-meeting-note-item *ngFor="let item of stories.continued" [story]="item" cdkDrag></app-meeting-note-item>
+      </mat-accordion>
     </mat-card>
     <mat-card class="meeting-container">
       <h2>Postponed</h2>
-      <div
+      <mat-accordion
           cdkDropList
           #postponedSoties="cdkDropList"
           [cdkDropListData]="stories.postponed"
           [cdkDropListConnectedTo]="[completedStories, continuedStories, newStories, excludedStories, cancelledStories]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of stories.postponed" cdkDrag>
-          <mat-icon [inline]="true">{{statusMap[item.currentState]}}</mat-icon>#{{item.id}} {{item.name}}
-        </div>
-      </div>
+        <app-meeting-note-item *ngFor="let item of stories.postponed" [story]="item" cdkDrag></app-meeting-note-item>
+      </mat-accordion>
     </mat-card>
   </div>
   <div style="display: flex">
     <mat-card class="meeting-container">
       <h2>Cancelled</h2>
-      <div
+      <mat-accordion
           cdkDropList
           #cancelledStories="cdkDropList"
           [cdkDropListData]="stories.cancelled"
           [cdkDropListConnectedTo]="[completedStories, continuedStories, postponedSoties, newStories, excludedStories]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of stories.cancelled" cdkDrag>
-          <mat-icon [inline]="true">{{statusMap[item.currentState]}}</mat-icon>
-          #{{item.id}} {{item.name}}
-        </div>
-      </div>
+        <app-meeting-note-item *ngFor="let item of stories.cancelled" [story]="item" cdkDrag></app-meeting-note-item>
+      </mat-accordion>
     </mat-card>
     <mat-card class="meeting-container">
       <h2>New</h2>
-      <div
+      <mat-accordion
           cdkDropList
           #newStories="cdkDropList"
           [cdkDropListData]="stories.new"
           [cdkDropListConnectedTo]="[completedStories, continuedStories, postponedSoties, cancelledStories, excludedStories]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of stories.new" cdkDrag>
-          <mat-icon [inline]="true">{{statusMap[item.currentState]}}</mat-icon>
-          #{{item.id}} {{item.name}}
-        </div>
-      </div>
+        <app-meeting-note-item *ngFor="let item of stories.new" [story]="item" cdkDrag></app-meeting-note-item>
+      </mat-accordion>
     </mat-card>
     <mat-card class="meeting-container">
       <h2>Excluded</h2>
-      <div
+      <mat-accordion
           cdkDropList
           #excludedStories="cdkDropList"
           [cdkDropListData]="excluded"
           [cdkDropListConnectedTo]="[completedStories, continuedStories, postponedSoties, cancelledStories, newStories]"
           class="example-list"
           (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let item of excluded" cdkDrag>
-          <mat-icon [inline]="true">{{statusMap[item.currentState]}}</mat-icon>
-          #{{item.id}} {{item.name}}
-        </div>
-      </div>
+        <app-meeting-note-item *ngFor="let item of excluded" [story]="item" cdkDrag></app-meeting-note-item>
+      </mat-accordion>
     </mat-card>
   </div>
 </div>

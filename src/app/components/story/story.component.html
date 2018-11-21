@@ -1,21 +1,19 @@
 <mat-expansion-panel (opened)="story.expanded = true"
-                     (closed)="story.expanded = false" [hideToggle]="true" matTooltip="story.name">
+                     (closed)="story.expanded = false" [hideToggle]="true"  matTooltip="story.name">
   <mat-expansion-panel-header class="story-item">
-    <mat-panel-description>
+    <mat-panel-description style="margin-right: 0">
       <mat-checkbox (click)="$event.stopPropagation()" [(ngModel)]="story.isEnabled"></mat-checkbox>
-      &nbsp;<mat-icon>{{statusMap[story.currentState]}}</mat-icon>
-      {{story.expanded ? '&nbsp;' : ''}}
-      <mat-icon *ngIf="story.expanded">{{typeMap[story.storyType]}}</mat-icon>
-      &nbsp;<mat-icon>{{numberMap[story.estimate]}}</mat-icon>
-      &nbsp;#{{story.id}}
+      &nbsp;<mat-icon class="story-icon">{{statusMap[story.currentState]}}</mat-icon>
+      &nbsp;<mat-icon class="story-icon">{{typeMap[story.storyType]}}</mat-icon>
+      &nbsp;<mat-icon class="story-icon">{{numberMap[story.estimate] || 'not_interested'}}</mat-icon>
       &nbsp;<b>{{story.expanded ? story.projectName : getAbbvr(story.projectName)}}</b>
-      &nbsp;{{story.expanded ? '' : getShortForm(story.name)}}
+      <span *ngIf="!story.expanded" (mouseenter)="openSnackBar(story.name, '');">&nbsp;#{{story.id}} {{getShortForm(story.name)}}</span>
     </mat-panel-description>
   </mat-expansion-panel-header>
   <mat-list>
     <mat-divider [inset]="true"></mat-divider>
     <mat-list-item>
-      {{story.name}}
+      #{{story.id}} - {{story.name}}
     </mat-list-item>
     <mat-divider *ngIf="story?.labels?.length" [inset]="true"></mat-divider>
     <mat-list-item *ngIf="story?.labels?.length">

@@ -49,6 +49,7 @@ import {StoryComponent} from './components/story/story.component';
 import {SettingsComponent} from './components/settings/settings.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MeetingNoteEditComponent } from './components/meeting-note-edit/meeting-note-edit.component';
+import { MeetingNoteItemComponent } from './components/meeting-note-item/meeting-note-item.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -67,7 +68,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     StoryComponent,
     SettingsComponent,
     SpinnerComponent,
-    MeetingNoteEditComponent
+    MeetingNoteEditComponent,
+    MeetingNoteItemComponent
   ],
   imports: [
     BrowserModule,
