@@ -25,6 +25,15 @@ export class MeetingNotesService {
         story.prePlanned = wasInLastNote ? 'Yes' : 'No';
         story.ownerKeys = story.ownerIds.map(id => memberMap[id].initials);
 
+        const isMine = story.ownerIds.find(id => id === user.id);
+
+        if (!isMine) {
+          classifiedStories.cancelled.push(story);
+          story.comment = 'Transferred to ' + story.ownerIds.map(id => memberMap[id].name).join(', ');
+
+          return;
+        }
+
         switch (story.currentState) {
           case 'delivered':
           case 'finished':
@@ -35,12 +44,8 @@ export class MeetingNotesService {
             classifiedStories.continued.push(story);
             break;
           default:
-            const isMine = story.ownerIds.find(id => id === user.id);
 
-            if (!isMine) {
-              classifiedStories.cancelled.push(story);
-              story.comment = 'Transferred to ' + story.ownerIds.map(id => memberMap[id].name).join(', ');
-            } else if (wasInLastNote) {
+            if (wasInLastNote) {
               classifiedStories.postponed.push(story);
               story.comment = 'Due to priority';
             } else {
