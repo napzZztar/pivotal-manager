@@ -23,7 +23,8 @@ import {
   MatSnackBarModule,
   MatChipsModule,
   MatMenuModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatStepperModule
 } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 
@@ -105,11 +106,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatChipsModule,
     MatMenuModule,
     DragDropModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatStepperModule
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent],
+  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent, MeetingNoteAddStoryModalComponent],
   exports: [
     MatSnackBarModule
   ]

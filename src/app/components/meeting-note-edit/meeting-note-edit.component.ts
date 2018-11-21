@@ -1,7 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import {MatDialog} from '@angular/material';
+
+
 import {PivotalService} from '../../services/pivotal.service';
 import {MeetingNotesService} from '../../meeting-notes.service';
+import {MeetingNoteAddStoryModalComponent} from '../meeting-note-add-story-modal/meeting-note-add-story-modal.component';
 
 @Component({
   selector: 'app-meeting-note-edit',
@@ -28,7 +32,7 @@ export class MeetingNoteEditComponent implements OnInit {
     new: []
   };
 
-  constructor(private pivotal: PivotalService, private meetingNotesService: MeetingNotesService) {
+  constructor(private pivotal: PivotalService, private meetingNotesService: MeetingNotesService, private dialog: MatDialog) {
     this.stories = this.pivotal.stories;
   }
 
@@ -48,5 +52,17 @@ export class MeetingNoteEditComponent implements OnInit {
         event.previousIndex,
         event.currentIndex);
     }
+  }
+
+
+  openAddStoryDialog() {
+    const dialogueRef = this.dialog.open(MeetingNoteAddStoryModalComponent, {
+      width: '80%', data: {
+        projects: this.pivotal.projects
+      }
+    });
+
+    dialogueRef.afterClosed().subscribe(() => {
+    });
   }
 }

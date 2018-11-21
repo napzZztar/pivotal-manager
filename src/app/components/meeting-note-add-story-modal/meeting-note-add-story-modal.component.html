@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>
+  <mat-icon aria-label>settings</mat-icon>
+</h2>
+<div mat-dialog-content>
+  <mat-horizontal-stepper #stepper>
+    <mat-step>
+      <ng-template matStepLabel>Select Project</ng-template>
+      <div *ngFor="let project of projects">
+        <button mat-button  matStepperNext (click)="projectId = project.projectId">{{project.projectName}}</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Enter Story Number</ng-template>
+      <mat-form-field style="width: 100%">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let storyId of stories" [selectable]="true"
+                    [removable]="true" (removed)="removeStoryId(storyId)">
+            #{{storyId}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Story IDs..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="addStoryId($event)">
+        </mat-chip-list>
+      </mat-form-field>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      You are now done.
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+
