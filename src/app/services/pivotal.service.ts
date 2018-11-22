@@ -22,6 +22,7 @@ export class PivotalService {
   projects: any[] = [];
   user: User;
   members: User[];
+  stories: any[];
 
   constructor(private dataStorageService: DataStorageService) {
     this.token = localStorage.apiKey;
@@ -30,6 +31,7 @@ export class PivotalService {
     this.user = user;
     this.projects = projects;
     this.members = members;
+    this.stories = stories;
   }
 
   refreshUserInfo(): Promise<any> {
@@ -117,7 +119,7 @@ export class PivotalService {
 
   refreshUserStories(startDate: string): Promise<any> {
     const promises = [];
-    const memberMap = this._getMemberMap();
+    const memberMap = this.getMemberMap();
     this.members.map(member => {
       member.stories = [];
     });
@@ -141,6 +143,8 @@ export class PivotalService {
         this.members.forEach(member => {
           member.stories = _.orderBy(member.stories, 'updatedAt');
         });
+
+        this.stories = stories;
       });
   }
 
@@ -160,6 +164,21 @@ export class PivotalService {
       });
   }
 
+  getStory(storyId: string) {
+    return this
+      .request(`/stories/${storyId}`)
+      .then(story => {
+        const project = this.projects.filter(p => p.projectId === story.projectId);
+
+        if (project && project.length) {
+          story.projectName = project[0].projectName;
+          return Promise.resolve(story);
+        } else {
+          return Promise.reject(null);
+        }
+      });
+  }
+
   _pushStiesToMembers(memberMap, projectStories) {
     projectStories.forEach((story) => {
       story.ownerIds.forEach(ownerId => {
@@ -175,7 +194,7 @@ export class PivotalService {
     });
   }
 
-  _getMemberMap() {
+  getMemberMap() {
     const map = {};
 
     this.members.forEach(member => {

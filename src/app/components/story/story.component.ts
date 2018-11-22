@@ -1,5 +1,6 @@
 import {Component, OnInit, Input} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
+import {FormControl} from '@angular/forms';
 
 const _ = require('lodash');
 const clipboard = require('electron').remote.clipboard;
@@ -11,9 +12,10 @@ const clipboard = require('electron').remote.clipboard;
 })
 export class StoryComponent implements OnInit {
   @Input() story: any;
+  expanded = false;
   statusMap = {
     unscheduled: 'ac_unit',
-    unstarted: 'playlist_add_',
+    unstarted: 'next_week',
     delivered: 'done',
     finished: 'done',
     accepted: 'done_all',
@@ -22,13 +24,14 @@ export class StoryComponent implements OnInit {
   };
 
   typeMap = {
-    feature: 'star_rate',
+    feature: 'stars',
     bug: 'bug_report',
     chore: 'settings',
     release: 'outlined_flag'
   };
 
   numberMap = {
+    0: 'exposure_zero',
     1: 'looks_one',
     2: 'looks_two',
     3: 'looks_3',
@@ -43,7 +46,7 @@ export class StoryComponent implements OnInit {
   }
 
   getShortForm(str: string) {
-    return str.substr(0, 32) + (str.length >= 32 ? '..' : '');
+    return str.substr(0, 30) + (str.length >= 30 ? '..' : '');
   }
 
   copyText(textToCopy: string) {

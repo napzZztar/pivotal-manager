@@ -2,7 +2,7 @@ import {HomeComponent} from './components/home/home.component';
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 import {TaskManagerComponent} from './components/task-manager/task-manager.component';
-import {MeetingNoteEditComponent} from './meeting-note-edit/meeting-note-edit.component';
+import {MeetingNoteEditComponent} from './components/meeting-note-edit/meeting-note-edit.component';
 
 const routes: Routes = [
   {

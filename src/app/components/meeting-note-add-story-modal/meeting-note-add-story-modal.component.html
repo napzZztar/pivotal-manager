@@ -1,0 +1,48 @@
+<h2 mat-dialog-title>
+  <mat-icon aria-label>library_add</mat-icon>
+</h2>
+<div mat-dialog-content>
+  <mat-horizontal-stepper [linear]="true" #stepper>
+    <!--    <mat-step [completed]="!!projectId">
+          <ng-template matStepLabel>Select Project</ng-template>
+          <div *ngFor="let project of projects">
+            <button mat-button  matStepperNext (click)="projectId = project.projectId">{{project.projectName}}</button>
+          </div>
+        </mat-step>-->
+    <mat-step [completed]="storyIds.length > 0">
+      <ng-template matStepLabel>Enter Story ID</ng-template>
+      <mat-form-field style="width: 100%">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let storyId of storyIds" [selectable]="true"
+                    [removable]="true" (removed)="removeStoryId(storyId)">
+            #{{storyId}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Story IDs..."
+                 [matChipInputFor]="chipList"
+                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                 [matChipInputAddOnBlur]="true"
+                 (matChipInputTokenEnd)="addStoryId($event)">
+        </mat-chip-list>
+      </mat-form-field>
+      <div>
+        <button mat-stroked-button matStepperNext>Next</button>
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Add Stories</ng-template>
+      <mat-list style="padding-bottom: 20px">
+        <mat-list-item *ngFor="let story of stories; let i = index; last as last">
+          <mat-icon *ngIf="story?.status === 'error'" color="warn" matTooltip="Story not found">error</mat-icon>
+          <b>{{story.status ? '' :  story.projectName}}</b> &nbsp;#{{storyIds[i]}}{{story.status ? '' : ' - ' + story.name}}
+          <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+        </mat-list-item>
+      </mat-list>
+      <div>
+        <button mat-stroked-button matStepperPrevious>Back</button>
+        <button mat-stroked-button [matDialogClose]="stories">Add</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>
+

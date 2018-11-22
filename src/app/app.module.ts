@@ -22,8 +22,11 @@ import {
   MatExpansionModule,
   MatSnackBarModule,
   MatChipsModule,
-  MatMenuModule
+  MatMenuModule,
+  MatTooltipModule,
+  MatStepperModule
 } from '@angular/material';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
@@ -47,7 +50,9 @@ import {TaskManagerComponent} from './components/task-manager/task-manager.compo
 import {StoryComponent} from './components/story/story.component';
 import {SettingsComponent} from './components/settings/settings.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { MeetingNoteEditComponent } from './meeting-note-edit/meeting-note-edit.component';
+import { MeetingNoteEditComponent } from './components/meeting-note-edit/meeting-note-edit.component';
+import { MeetingNoteItemComponent } from './components/meeting-note-item/meeting-note-item.component';
+import { MeetingNoteAddStoryModalComponent } from './components/meeting-note-add-story-modal/meeting-note-add-story-modal.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -66,7 +71,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     StoryComponent,
     SettingsComponent,
     SpinnerComponent,
-    MeetingNoteEditComponent
+    MeetingNoteEditComponent,
+    MeetingNoteItemComponent,
+    MeetingNoteAddStoryModalComponent
   ],
   imports: [
     BrowserModule,
@@ -97,11 +104,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     MatExpansionModule,
     MatChipsModule,
-    MatMenuModule
+    MatMenuModule,
+    DragDropModule,
+    MatTooltipModule,
+    MatStepperModule
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent],
+  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent, MeetingNoteAddStoryModalComponent],
   exports: [
     MatSnackBarModule
   ]

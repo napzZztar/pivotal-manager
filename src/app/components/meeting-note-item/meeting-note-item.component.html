@@ -1,0 +1,23 @@
+<mat-expansion-panel (opened)="story.expanded = true"
+                     (closed)="story.expanded = false" [hideToggle]="true">
+  <mat-expansion-panel-header>
+    <mat-panel-description>
+      {{story.expanded ? story.projectName : story.name}}
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <mat-list>
+    <mat-list-item style="height: auto">
+      &nbsp;<mat-icon class="story-icon">{{statusMap[story.currentState]}}</mat-icon>
+      &nbsp;<mat-icon class="story-icon">{{typeMap[story.storyType]}}</mat-icon>
+      &nbsp;<mat-icon class="story-icon">{{numberMap[story.estimate] || 'not_interested'}}</mat-icon>
+      <span>&nbsp;</span>
+      #{{story.id}} - {{story.name}}
+    </mat-list-item>
+    <mat-list-item style="padding-top: 15px">
+      <mat-form-field style="width: 100%">
+        <input matInput placeholder="Comment" [ngModel]="story.comment">
+      </mat-form-field>
+    </mat-list-item>
+  </mat-list>
+</mat-expansion-panel>
+
