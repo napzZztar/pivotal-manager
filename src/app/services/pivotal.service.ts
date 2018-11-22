@@ -164,6 +164,21 @@ export class PivotalService {
       });
   }
 
+  getStory(storyId: string) {
+    return this
+      .request(`/stories/${storyId}`)
+      .then(story => {
+        const project = this.projects.filter(p => p.projectId === story.projectId);
+
+        if (project && project.length) {
+          story.projectName = project[0].projectName;
+          return Promise.resolve(story);
+        } else {
+          return Promise.reject(null);
+        }
+      });
+  }
+
   _pushStiesToMembers(memberMap, projectStories) {
     projectStories.forEach((story) => {
       story.ownerIds.forEach(ownerId => {

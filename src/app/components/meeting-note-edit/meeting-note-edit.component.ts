@@ -7,6 +7,8 @@ import {PivotalService} from '../../services/pivotal.service';
 import {MeetingNotesService} from '../../meeting-notes.service';
 import {MeetingNoteAddStoryModalComponent} from '../meeting-note-add-story-modal/meeting-note-add-story-modal.component';
 
+const _ = require('lodash');
+
 @Component({
   selector: 'app-meeting-note-edit',
   templateUrl: './meeting-note-edit.component.html',
@@ -57,12 +59,21 @@ export class MeetingNoteEditComponent implements OnInit {
 
   openAddStoryDialog() {
     const dialogueRef = this.dialog.open(MeetingNoteAddStoryModalComponent, {
-      width: '80%', data: {
+      width: '60%', data: {
         projects: this.pivotal.projects
       }
     });
 
-    dialogueRef.afterClosed().subscribe(() => {
+    dialogueRef.afterClosed().subscribe(stories => {
+      let existingStories = this.classifiedStories.completed.concat(...this.classifiedStories.continued);
+      existingStories = existingStories.concat(...this.classifiedStories.cancelled);
+      existingStories = existingStories.concat(...this.classifiedStories.postponed);
+      existingStories = existingStories.concat(...this.classifiedStories.new);
+      existingStories = existingStories.concat(...this.excluded);
+
+      const newStories = _.pullAllBy(stories, existingStories, 'id');
+
+      this.classifiedStories.new.push(...newStories);
     });
   }
 }

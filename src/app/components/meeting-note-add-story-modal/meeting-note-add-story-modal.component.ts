@@ -3,6 +3,8 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 import {MatChipInputEvent} from '@angular/material';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
+import {PivotalService} from '../../services/pivotal.service';
+
 const _ = require('lodash');
 
 @Component({
@@ -12,11 +14,12 @@ const _ = require('lodash');
 })
 export class MeetingNoteAddStoryModalComponent implements OnInit {
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
-  public projectId: number;
-  public stories: string[] = [];
+  public storyIds: string[] = [];
+  public stories: any[] = [];
   projects: any[] = [];
 
-  constructor(public dialogRef: MatDialogRef<any>,
+  constructor(private pivotal: PivotalService,
+              private dialog: MatDialogRef<any>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
     this.projects = data.projects;
   }
@@ -30,8 +33,23 @@ export class MeetingNoteAddStoryModalComponent implements OnInit {
 
     if (/#?\d{9} *$/.test(value)) {
       const inputValue = value.match(/(\d{9}) *$/)[1];
-      this.stories.push(inputValue);
-      this.stories = _.uniq(this.stories);
+      const lastStoryLength = this.storyIds.length;
+      this.storyIds.push(inputValue);
+      this.storyIds = _.uniq(this.storyIds);
+
+      if (lastStoryLength + 1 === this.storyIds.length) {
+        this.stories[lastStoryLength] = {status: 'processing'};
+
+        this.pivotal
+          .getStory(inputValue)
+          .then(story => {
+            this.stories[lastStoryLength] = story;
+          })
+          .catch((error) => {
+            console.log(error);
+            this.stories[lastStoryLength] = {status: 'error'};
+          });
+      }
     }
 
     if (input) {
@@ -40,9 +58,10 @@ export class MeetingNoteAddStoryModalComponent implements OnInit {
   }
 
   removeStoryId(storyId: string) {
-    const index = this.stories.indexOf(storyId);
+    const index = this.storyIds.indexOf(storyId);
 
     if (index >= 0) {
+      this.storyIds.splice(index, 1);
       this.stories.splice(index, 1);
     }
   }
