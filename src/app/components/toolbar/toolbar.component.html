@@ -13,8 +13,8 @@
       <button mat-menu-item (click)="navigateTo('task-manager')">
         <mat-icon aria-label>home</mat-icon> Home
       </button>
-      <button mat-menu-item [matMenuTriggerFor]="meetingNotes">
-        <mat-icon aria-label>table_chart</mat-icon>Meeting Notes
+      <button mat-menu-item (click)="navigateTo('meeting-notes-edit')">
+        <mat-icon aria-label>table_chart</mat-icon>Notes
       </button>
       <button mat-menu-item (click)="refreshClick()">
         <mat-icon aria-label>refresh</mat-icon> Refresh
@@ -29,11 +29,6 @@
         </mat-icon>
         Logout
       </button>
-    </mat-menu>
-
-    <mat-menu #meetingNotes="matMenu">
-      <button mat-menu-item (click)="navigateTo('meeting-notes-edit')">Edit</button>
-      <button mat-menu-item>Export</button>
     </mat-menu>
 
   </mat-toolbar-row>

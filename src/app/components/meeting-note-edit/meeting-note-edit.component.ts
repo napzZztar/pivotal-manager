@@ -71,7 +71,7 @@ export class MeetingNoteEditComponent implements OnInit {
       existingStories = existingStories.concat(...this.classifiedStories.new);
       existingStories = existingStories.concat(...this.excluded);
 
-      const newStories = _.pullAllBy(stories, existingStories, 'id');
+      const newStories = _.pullAllBy(stories, existingStories, 'id').filter(story => story.id);
 
       this.classifiedStories.new.push(...newStories);
     });

@@ -1,5 +1,5 @@
 .meeting-notes{
-  padding: 66px 2px 2px 2px;
+  padding: 66px 0 0 0;
   width: 100%
 }
 
@@ -60,7 +60,7 @@
 }
 
 .add-button{
-  position: absolute;
+  position: fixed;
   bottom: 15px;
   right: 15px;
   z-index: 1001;
