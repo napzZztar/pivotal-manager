@@ -15,12 +15,21 @@ export class TaskManagerComponent implements OnInit {
   members: any[] = [];
   projects: any[] = [];
   dialogRef: any;
+  refreshEvent: any;
+  reloadEvent: any;
 
   constructor(private pivotalService: PivotalService, private router: Router, private dialog: MatDialog) {
+    this.refreshEvent = this.refreshStories.bind(this);
+    this.reloadEvent = this.setProjects.bind(this);
   }
 
   ngOnInit() {
-    this.setProjects();
+    if (this.pivotalService.needsRefresh) {
+      this.setProjects();
+      this.pivotalService.disableRefresh();
+    } else {
+      this.refreshStories();
+    }
   }
 
   openSpinner() {
@@ -45,9 +54,11 @@ export class TaskManagerComponent implements OnInit {
     return element ? element.id : null;
   }
 
-  setProjects() {
-    setTimeout(()  => {
-      this.openSpinner();
+  setProjects(showSpinner = true) {
+    setTimeout(() => {
+      if (showSpinner) {
+        this.openSpinner();
+      }
     });
     this
       .pivotalService
@@ -67,6 +78,15 @@ export class TaskManagerComponent implements OnInit {
         this.closeSpinner();
         localStorage.apiKey = '';
         this.router.navigate(['/']);
+      });
+  }
+
+  refreshStories() {
+    this
+      .pivotalService
+      .syncUserAndProjectStatus()
+      .then(() => {
+        this.refreshLists();
       });
   }
 }

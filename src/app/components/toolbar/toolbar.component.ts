@@ -55,8 +55,8 @@ export class ToolbarComponent implements OnInit {
       }
     });
 
-    dialogueRef.afterClosed().subscribe(() => {
-      if (this.refresh) {
+    dialogueRef.afterClosed().subscribe(isSave => {
+      if (isSave && this.refresh) {
         this.refresh();
       }
     });

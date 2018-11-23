@@ -12,6 +12,7 @@ let projects: any[] = [];
 let user: User;
 let members: User[] = [];
 let stories: any[] = [];
+let needsRefresh = true;
 
 @Injectable({
   providedIn: 'root'
@@ -227,6 +228,18 @@ export class PivotalService {
 
         return Promise.resolve(camelize(data));
       });
+  }
+
+  get needsRefresh() {
+    return needsRefresh;
+  }
+
+  enableRefresh() {
+    needsRefresh = true;
+  }
+
+  disableRefresh() {
+    needsRefresh = false;
   }
 }
 
