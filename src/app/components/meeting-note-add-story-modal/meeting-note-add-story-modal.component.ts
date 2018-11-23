@@ -43,6 +43,7 @@ export class MeetingNoteAddStoryModalComponent implements OnInit {
         this.pivotal
           .getStory(inputValue)
           .then(story => {
+            story.badge = '*';
             this.stories[lastStoryLength] = story;
           })
           .catch((error) => {
@@ -64,5 +65,11 @@ export class MeetingNoteAddStoryModalComponent implements OnInit {
       this.storyIds.splice(index, 1);
       this.stories.splice(index, 1);
     }
+  }
+
+  getAbbvr(word: string) {
+    const chars = word.match(/([A-Z])|( \w)/gm);
+
+    return chars.join('').toUpperCase().replace(/ /gm, '');
   }
 }

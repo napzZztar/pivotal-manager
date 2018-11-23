@@ -20,7 +20,7 @@ export class TaskManagerComponent implements OnInit {
 
   constructor(private pivotalService: PivotalService, private router: Router, private dialog: MatDialog) {
     this.refreshEvent = this.refreshStories.bind(this);
-    this.reloadEvent = this.setProjects.bind(this);
+    this.reloadEvent = this.refreshLists.bind(this);
   }
 
   ngOnInit() {

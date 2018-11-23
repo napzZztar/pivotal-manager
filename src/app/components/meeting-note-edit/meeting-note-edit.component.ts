@@ -73,6 +73,12 @@ export class MeetingNoteEditComponent implements OnInit {
 
       const newStories = _.pullAllBy(stories, existingStories, 'id').filter(story => story.id);
 
+      newStories.map(story => {
+        setTimeout(() => {
+          delete story.badge;
+        }, 5000);
+      });
+
       this.classifiedStories.new.push(...newStories);
     });
   }

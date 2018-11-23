@@ -1,5 +1,5 @@
 <mat-expansion-panel (opened)="story.expanded = true"
-                     (closed)="story.expanded = false" [hideToggle]="true">
+                     (closed)="story.expanded = false" [hideToggle]="true" matBadge="{{story.badge || ''}}">
   <mat-expansion-panel-header>
     <mat-panel-description>
       {{story.expanded ? story.projectName : story.name}}
