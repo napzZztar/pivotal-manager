@@ -65,6 +65,10 @@ export class MeetingNoteEditComponent implements OnInit {
     });
 
     dialogueRef.afterClosed().subscribe(stories => {
+      if (!stories) {
+        return;
+      }
+
       let existingStories = this.classifiedStories.completed.concat(...this.classifiedStories.continued);
       existingStories = existingStories.concat(...this.classifiedStories.cancelled);
       existingStories = existingStories.concat(...this.classifiedStories.postponed);
