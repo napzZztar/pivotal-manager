@@ -28,6 +28,7 @@ import {
   MatBadgeModule
 } from '@angular/material';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {EcoFabSpeedDialModule} from '@ecodev/fab-speed-dial';
 
 
 import {HttpClientModule, HttpClient} from '@angular/common/http';
@@ -109,7 +110,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DragDropModule,
     MatTooltipModule,
     MatStepperModule,
-    MatBadgeModule
+    MatBadgeModule,
+    EcoFabSpeedDialModule
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],

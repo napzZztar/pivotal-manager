@@ -15,6 +15,7 @@ const _ = require('lodash');
   styleUrls: ['./meeting-note-edit.component.scss']
 })
 export class MeetingNoteEditComponent implements OnInit {
+  expandSpeedDial = false;
   excluded: any = [];
   stories: any[] = [];
   statusMap = {
