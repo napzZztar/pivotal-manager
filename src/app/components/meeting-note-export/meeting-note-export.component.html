@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>
+  <mat-icon aria-label>share</mat-icon>
+</h2>
+<div mat-dialog-content>
+  <table class="note-table">
+    <tr>
+      <th class="mat-elevation-z1">No.</th>
+      <th class="mat-elevation-z1">Story Id</th>
+      <th class="mat-elevation-z1">Story Title</th>
+      <th class="mat-elevation-z1">Status</th>
+      <th class="mat-elevation-z1">Is Pre-planned</th>
+      <th class="mat-elevation-z1">Comment</th>
+    </tr>
+    <tr *ngFor="let noteItem of meetingNotes; let i = index">
+      <th *ngIf="noteItem.isProject" colspan="6" class="mat-elevation-z1">{{noteItem.projectName}}</th>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">{{i}}</td>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">#{{noteItem.id}}</td>
+      <td *ngIf="!noteItem.isProject" class="mat-elevation-z1">{{noteItem.name}}</td>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">{{noteItem.status}}</td>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">{{noteItem.isPrePlanned}}</td>
+      <td *ngIf="!noteItem.isProject" class="mat-elevation-z1">{{noteItem.comment}}</td>
+    </tr>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button [matDialogClose]="true">Cancel</button>
+  <button mat-stroked-button cdkFocusInitial [matDialogClose]="true">Copy</button>
+</div>

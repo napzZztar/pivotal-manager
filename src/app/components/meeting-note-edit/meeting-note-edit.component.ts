@@ -6,6 +6,7 @@ import {MatDialog} from '@angular/material';
 import {PivotalService} from '../../services/pivotal.service';
 import {MeetingNotesService} from '../../meeting-notes.service';
 import {MeetingNoteAddStoryModalComponent} from '../meeting-note-add-story-modal/meeting-note-add-story-modal.component';
+import {MeetingNoteExportComponent} from '../meeting-note-export/meeting-note-export.component';
 
 const _ = require('lodash');
 
@@ -70,21 +71,37 @@ export class MeetingNoteEditComponent implements OnInit {
         return;
       }
 
-      let existingStories = this.classifiedStories.completed.concat(...this.classifiedStories.continued);
-      existingStories = existingStories.concat(...this.classifiedStories.cancelled);
-      existingStories = existingStories.concat(...this.classifiedStories.postponed);
-      existingStories = existingStories.concat(...this.classifiedStories.new);
-      existingStories = existingStories.concat(...this.excluded);
+      this._addStories(stories);
+    });
+  }
 
-      const newStories = _.pullAllBy(stories, existingStories, 'id').filter(story => story.id);
+  _addStories(stories: any[]) {
+    let existingStories = this.classifiedStories.completed.concat(...this.classifiedStories.continued);
+    existingStories = existingStories.concat(...this.classifiedStories.cancelled);
+    existingStories = existingStories.concat(...this.classifiedStories.postponed);
+    existingStories = existingStories.concat(...this.classifiedStories.new);
+    existingStories = existingStories.concat(...this.excluded);
 
-      newStories.map(story => {
-        setTimeout(() => {
-          delete story.badge;
-        }, 5000);
-      });
+    const newStories = _.pullAllBy(stories, existingStories, 'id').filter(story => story.id);
 
-      this.classifiedStories.new.push(...newStories);
+    newStories.map(story => {
+      setTimeout(() => {
+        delete story.badge;
+      }, 5000);
+    });
+
+    this.classifiedStories.new.push(...newStories);
+  }
+
+  openAddShareNoteDialog() {
+    const dialogueRef = this.dialog.open(MeetingNoteExportComponent, {
+      width: '80%',
+      data: {
+        classifiedStories: this.classifiedStories
+      }
+    });
+
+    dialogueRef.afterClosed().subscribe(() => {
     });
   }
 }

@@ -55,6 +55,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { MeetingNoteEditComponent } from './components/meeting-note-edit/meeting-note-edit.component';
 import { MeetingNoteItemComponent } from './components/meeting-note-item/meeting-note-item.component';
 import { MeetingNoteAddStoryModalComponent } from './components/meeting-note-add-story-modal/meeting-note-add-story-modal.component';
+import { MeetingNoteExportComponent } from './components/meeting-note-export/meeting-note-export.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -75,7 +76,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SpinnerComponent,
     MeetingNoteEditComponent,
     MeetingNoteItemComponent,
-    MeetingNoteAddStoryModalComponent
+    MeetingNoteAddStoryModalComponent,
+    MeetingNoteExportComponent
   ],
   imports: [
     BrowserModule,
@@ -115,7 +117,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [ElectronService, TaskManagerComponent],
   bootstrap: [AppComponent],
-  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent, MeetingNoteAddStoryModalComponent],
+  entryComponents: [LoginComponent, SettingsComponent, SpinnerComponent, MeetingNoteAddStoryModalComponent, MeetingNoteExportComponent],
   exports: [
     MatSnackBarModule
   ]
