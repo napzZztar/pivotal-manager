@@ -72,7 +72,10 @@ export class MeetingNotesService {
     });
 
     projects.forEach(projectId => {
-      const projectStories = projectStoriesMap[projectId];
+      const projectStories = projectStoriesMap[projectId].map((story, index ) => {
+        story.slNo = index + 1;
+        return story;
+      });
 
       meetingNote.push({
         isProject: true,
@@ -86,7 +89,7 @@ export class MeetingNotesService {
   }
 
   _includeStoryCategory(category, categoryItems, projects, projectStories) {
-    categoryItems.forEach(story => {
+    categoryItems.forEach((story, slNo) => {
       const projectId = story.projectId;
 
       story.status = category === 'new' ? '' : _.startCase(category);

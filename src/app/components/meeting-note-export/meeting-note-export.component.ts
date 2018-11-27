@@ -21,4 +21,32 @@ export class MeetingNoteExportComponent implements OnInit {
     this.meetingNotes = this.noteService.getNote(this.classifiedStories);
   }
 
+  copyMeetingNote() {
+    this._selectElementContents(document.getElementById('note-table'));
+    document.execCommand('copy');
+  }
+
+  _selectElementContents(el) {
+    let range;
+    let sel;
+    const body: any = document.body;
+
+    if (document.createRange && window.getSelection) {
+      range = document.createRange();
+      sel = window.getSelection();
+      sel.removeAllRanges();
+      try {
+        range.selectNodeContents(el);
+        sel.addRange(range);
+      } catch (e) {
+        range.selectNode(el);
+        sel.addRange(range);
+      }
+    } else if (body.createTextRange) {
+      range = body.createTextRange();
+      range.moveToElementText(el);
+      range.select();
+    }
+  }
+
 }
