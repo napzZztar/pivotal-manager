@@ -34,7 +34,7 @@
       <mat-chip-list>
         <mat-chip *ngFor="let story of stories; let i = index; last as last" [removable]="true" (removed)="removeStoryId(storyIds[i])">
           <mat-icon *ngIf="story?.status === 'error'" color="warn" matTooltip="Story not found">error</mat-icon>
-          <b>{{story.status ? '' :  getAbbvr(story.projectName)}} #{{storyIds[i]}}</b> {{story.status ? '' : ' - ' + story.name}}
+          <b>{{story.status ? '' :  getAbbvr(story.projectName)}} #{{storyIds[i]}}</b> {{story.status ? '' : '&nbsp;- ' + story.name}}
           <span class="spacer"></span>
           <mat-icon matChipRemove style="left: -5px">cancel</mat-icon>
         </mat-chip>

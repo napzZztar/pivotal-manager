@@ -1,0 +1,30 @@
+<h2 mat-dialog-title>
+  <mat-icon aria-label>share</mat-icon>
+</h2>
+<div mat-dialog-content>
+  <table id="note-table">
+    <tr>
+      <th class="mat-elevation-z3">No.</th>
+      <th class="mat-elevation-z3">Story Id</th>
+      <th class="mat-elevation-z3">Point</th>
+      <th class="mat-elevation-z3">Description</th>
+      <th class="mat-elevation-z3">Status</th>
+      <th class="mat-elevation-z3">Pre-planned</th>
+      <th class="mat-elevation-z3">Comment</th>
+    </tr>
+    <tr *ngFor="let noteItem of meetingNotes">
+      <th *ngIf="noteItem.isProject" colspan="7" class="mat-elevation-z2">{{noteItem.projectName}}</th>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">{{noteItem.slNo}}</td>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1"><a href="https://www.pivotaltracker.com/story/show/{{noteItem.id}}">#{{noteItem.id}}</a></td>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">{{noteItem.estimate}}</td>
+      <td *ngIf="!noteItem.isProject" class="mat-elevation-z1">{{noteItem.name}}</td>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">{{noteItem.status}}</td>
+      <td *ngIf="!noteItem.isProject" style="text-align: center" class="mat-elevation-z1">{{noteItem.isPrePlanned}}</td>
+      <td *ngIf="!noteItem.isProject" class="mat-elevation-z1">{{noteItem.comment}}</td>
+    </tr>
+  </table>
+</div>
+<div mat-dialog-actions>
+  <button mat-stroked-button [matDialogClose]="true">Cancel</button>
+  <button mat-stroked-button cdkFocusInitial (click)="copyMeetingNote()" matDialogClose>Copy</button>
+</div>

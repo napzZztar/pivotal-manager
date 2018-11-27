@@ -104,7 +104,7 @@ export class PivotalService {
   }
 
   syncUserAndProjectStatus(): Promise<any> {
-    const {enabledProjects, enabledMembers, startDate} = this.dataStorageService.getSettings();
+    const {enabledProjects, enabledMembers, startDate, includeDone, includeUpcoming} = this.dataStorageService.getSettings();
 
     projects.forEach(project => {
       project.isEnabled = enabledProjects.includes(project.id);
@@ -115,10 +115,10 @@ export class PivotalService {
       member.isEnabled = enabledMembers.includes(member.id);
     });
 
-    return this.refreshUserStories(startDate);
+    return this.refreshUserStories(startDate, includeDone, includeUpcoming);
   }
 
-  refreshUserStories(startDate: string): Promise<any> {
+  refreshUserStories(startDate: string, includeDone: boolean, includeUpcoming: boolean): Promise<any> {
     const promises = [];
     const memberMap = this.getMemberMap();
     this.members.map(member => {
@@ -127,7 +127,7 @@ export class PivotalService {
 
     this.projects.forEach(project => {
       if (project.isEnabled) {
-        promises.push(this.listStories(project, startDate));
+        promises.push(this.listStories(project, startDate, includeDone, includeUpcoming));
       }
     });
 
@@ -149,12 +149,16 @@ export class PivotalService {
       });
   }
 
-  listStories(project: any, startDate: string) {
+  listStories(project: any, startDate: string, includeDone: boolean = true, includeUpcoming: boolean = true) {
+    const doneStates = 'accepted,delivered,finished,';
+    const upcomingStates = ',planned,unstarted,unscheduled';
+    const withState = `${includeDone ? doneStates : ''}started,rejected${includeUpcoming ? upcomingStates : ''}`;
+
     return this
       .request({
         uri: `/projects/${project.projectId}/stories`,
         qs: {
-          updated_after: startDate
+          filter: `state:${withState} updated_after:${startDate}`
         }
       })
       .then(projectStories => {
